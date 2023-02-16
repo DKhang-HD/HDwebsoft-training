@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Success upload file</title>
+</head>
+<body>
+    <p> You success to upload file! </p>
+    <p> <a href= "{% url 'uploadfile:listfile' %}"> Do you want to upload another File? Click here! </a> </p>
+    <p> <a href= "{% url 'uploadfile:results' %}"> Do you want to see all the file which you uploaded? Click here! </a> </p>
+</body>
+</html>
