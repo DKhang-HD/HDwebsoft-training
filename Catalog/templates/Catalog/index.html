@@ -1,0 +1,12 @@
+<h1> This is list of Category </h1>
+{% if category_list %}
+<p>
+    <ul>
+        {%for category in  category_list %}
+            <li><a href ="{% url 'Catalog:detail' category.id %}"> {{category.type_book}} </a> </li> 
+        {% endfor %}
+    </ul>
+</p>
+{% else %}
+<p> No type of category are available </p>
+{% endif %}

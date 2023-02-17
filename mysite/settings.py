@@ -33,6 +33,9 @@ ALLOWED_HOSTS = ["*"]
 INSTALLED_APPS = [
     'uploadfile.apps.UploadfileConfig',
     'sendmail.apps.SendmailConfig',
+    'User.apps.UserConfig',
+    'Catalog.apps.CatalogConfig',
+    'blog.apps.BlogConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

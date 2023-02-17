@@ -1,0 +1,6 @@
+<h1> This list of {{category.type_book}} </h1>
+<ul> 
+    {% for book in category.product_set.all %}
+    <li> {{book.name_book}} </li>
+    {% endfor %}
+</ul>

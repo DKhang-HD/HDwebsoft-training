@@ -1,0 +1,23 @@
+<!-- <h1> {{question.question_text}} </h1>
+<ul> 
+    {% for choice in question.choice_set.all %}
+    <li> {{choice.choice_text}}</li>
+    {% endfor %}
+</ul> -->
+
+<form action="{% url 'blog:vote' question.id %}" method="post">
+    <!-- Bảo mật, bất cứ khi nào sử dụng post đều phải dùng -->
+    {% csrf_token %} 
+    
+    <fieldset>
+        <legend><h1>{{ question.question_text }}</h1></legend>
+        {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+        {% for choice in question.choice_set.all %}
+            <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}"> 
+            <!-- forloop.counter ->lặp tự động qua các biến với index bắt đầu = 1 -->
+            <!-- id ở trên để chỉ vào cái for ở dưới label -->
+            <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
+        {% endfor %}
+    </fieldset>
+<input type="submit" value="Vote">
+</form>
