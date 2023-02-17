@@ -11,10 +11,10 @@
         {% csrf_token %}
         <!-- {%if error_message %} <p><strong>{{error_message}} </strong></p> {%endif%} -->
         
-        <p> Name of student: {{form.name_student}} </p>
+        <!-- <p> Name of student: {{form.name_student}} </p>
         <p> Grade_student: {{form.grade_student}} </p>   
-        <p> File: {{form.file}} </p>
-
+        <p> File: {{form.file}} </p> -->
+        {{form.as_p}}
         <p><input type = "submit" value = "UpLoad"/> </p>
     </form>
     <p> <a href= "{% url 'uploadfile:results' %}"> Do you want to see all the file which you uploaded? Click here! </a> </p>

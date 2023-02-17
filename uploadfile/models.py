@@ -11,3 +11,8 @@ class Student(models.Model):
     file_student = models.FileField(null = True)
     def __str__(self):
         return self.name
+
+class Student_Model(models.Model):
+    name = models.CharField(max_length=100)
+    grade = models.CharField(max_length=200)
+    file_student = models.FileField(upload_to='documents/')

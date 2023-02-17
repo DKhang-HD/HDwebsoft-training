@@ -31,6 +31,7 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
+    'uploadimage.apps.UploadimageConfig',
     'uploadfile.apps.UploadfileConfig',
     'sendmail.apps.SendmailConfig',
     'User.apps.UserConfig',
@@ -138,3 +139,9 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'alvintk113@gmail.com'
 EMAIL_HOST_PASSWORD = 'piihmzadzmlyoabm'
 EMAIL_USE_TLS = True
+
+
+# # Upload file path
+import os
+MEDIA_URL = '/media/' # http to access
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media') # where file is saved

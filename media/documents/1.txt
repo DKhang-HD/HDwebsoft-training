@@ -1,0 +1,9 @@
+KhangkhangkhangToi là ai để tôi biết tôi là ai, miễn sao nó dài
+bla bla bla
+bla ha ha ha ha
+eh heh heh eheh 
+ewlkrjlewj;lrjasd 
+213213213
+
+# stu = Student(name = str(request.POST['name_student']),grade = str(request.POST['grade_student']),file_student = str([str(file) for file in request.FILES.getlist('file')]))
+file = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
