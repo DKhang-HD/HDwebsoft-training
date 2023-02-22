@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
-
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -141,7 +141,10 @@ EMAIL_HOST_PASSWORD = 'piihmzadzmlyoabm'
 EMAIL_USE_TLS = True
 
 
-# # Upload file path
-import os
-MEDIA_URL = '/media/' # http to access
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media') # where file is saved
+# Upload file path
+
+MEDIA_URL = '/media/'       # http to access
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')        # where file is saved
+
+# login url
+LOGIN_URL = '/User/login'

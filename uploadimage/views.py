@@ -3,15 +3,12 @@ from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
 from .forms import ImageForm
 from .models import UploadImage
-
 # Create your views here.
 
 
-def image_view(request):
-
+def imageview(request):
 	if request.method == 'POST':
 		form = ImageForm(request.POST, request.FILES)
-
 		if form.is_valid():
 			form.save()
 			return HttpResponseRedirect(reverse_lazy("uploadimage:success"))
@@ -23,11 +20,10 @@ def image_view(request):
 def success(request):
 	return HttpResponse('successfully uploaded')
 
+
 # display image
-def display_images(request):
- 
-    if request.method == 'GET':
-        # getting all the objects of hotel.
-        images = UploadImage.objects.all()
-        return render(request, 'uploadimage/display_images.html',
-                       {'images': images})
+def displayimages(request):
+	if request.method == 'GET':
+		# getting all the objects.
+		images = UploadImage.objects.all()
+		return render(request, 'uploadimage/display_images.html', {'images': images})
