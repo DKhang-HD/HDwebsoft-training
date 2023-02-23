@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results of upload file</title>
+</head>
+<body>
+    
+    <ul>
+        {% for student in students_list %}
+        <li> Name of student: {{student.name}}     ||     Grade of student: {{student.grade}}     ||     <a href = "{% url 'uploadfile:contents' student.id%}">File name of student: {{student.file_student}}</a></li>
+        {%endfor%}        
+    </ul>
+    <p><em>Click file name to see content </em></p>
+    <p> <a href= "{% url 'uploadfile:listfile' %}"> Do you want to upload another File? Click here! </a> </p>
+</body>
+</html>

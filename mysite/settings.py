@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
-
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -31,7 +31,12 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
+    'uploadimage.apps.UploadimageConfig',
+    'uploadfile.apps.UploadfileConfig',
     'sendmail.apps.SendmailConfig',
+    'User.apps.UserConfig',
+    'Catalog.apps.CatalogConfig',
+    'blog.apps.BlogConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -112,7 +117,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Ho_Chi_Minh'
 
 USE_I18N = True
 
@@ -123,6 +128,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static-files')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -134,3 +140,14 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'alvintk113@gmail.com'
 EMAIL_HOST_PASSWORD = 'piihmzadzmlyoabm'
 EMAIL_USE_TLS = True
+
+
+# Upload file path
+MEDIA_URL = '/media/'       # http to access
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')        # where file is saved
+# MEDIA_ROOT = "E:\\Work\\HDWebSoft\\Training\\mysite\\media"
+# print(os.path.isfile("MEDIA_ROOT/Catalog/Product/Dao_Giau_Vang.jpg"))
+# print("1", os.path.isfile(f"{MEDIA_ROOT}/Catalog/Product/Dao_Giau_Vang.jpg"))
+# print("2", f"{MEDIA_ROOT}/Catalog/Product/Dao_Giau_Vang.jpg")
+# login url
+LOGIN_URL = '/User/login'

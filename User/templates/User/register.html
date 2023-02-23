@@ -1,0 +1,13 @@
+    
+
+<!--Register-->
+<h1>Register</h1>
+	<form method="POST" action="{% url 'User:register' %}">
+		{% csrf_token %}
+		{{register_form.as_p}}
+		<button type="submit">Register</button>
+	</form>
+	<p>If you already have an account. <a href="{% url 'User:login' %}">Login</a></p>
+<!--	<p class="text-center">If you already have an account, <a href="/login">login</a> instead.</p>-->
+
+<!--{{form.as_p}}-->

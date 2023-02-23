@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload File</title>
+</head>
+<body>
+    <form action = "{% url 'uploadfile:listfile' %}" method = "post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <!-- {%if error_message %} <p><strong>{{error_message}} </strong></p> {%endif%} -->
+        
+        <!-- <p> Name of student: {{form.name_student}} </p>
+        <p> Grade_student: {{form.grade_student}} </p>   
+        <p> File: {{form.file}} </p> -->
+        {{form.as_p}}
+        <p><input type = "submit" value = "UpLoad"/> </p>
+    </form>
+    <p> <a href= "{% url 'uploadfile:results' %}"> Do you want to see all the file which you uploaded? Click here! </a> </p>
+    <p> <a href= "{% url 'uploadfile:index' %}"> Back to the homepage </a> </p>
+</body>
+</html>
