@@ -16,15 +16,6 @@ def index(request):
     }
     return render(request, 'blog/index.html', context)
 
-# def detail(request, question_id):
-#     try:
-#         question = Question.objects.get(pk =question_id)
-#     except Question.DoesNotExist:
-#         raise Http404("Question does not exist")
-#     return render(request, 'blog/detail.html', {'question' : question})
-
-# shortcut: get_object_or_404()
-
 
 def detail(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
