@@ -128,8 +128,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static-files')
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
@@ -141,13 +140,15 @@ EMAIL_HOST_USER = 'alvintk113@gmail.com'
 EMAIL_HOST_PASSWORD = 'piihmzadzmlyoabm'
 EMAIL_USE_TLS = True
 
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'static'),
+#     os.path.join(BASE_DIR, 'Catalog/static'),
+# ]
 
 # Upload file path
+# MEDIA_URL = '/images/'       # http to access
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'Catalog/static/images')
 MEDIA_URL = '/media/'       # http to access
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')        # where file is saved
-# MEDIA_ROOT = "E:\\Work\\HDWebSoft\\Training\\mysite\\media"
-# print(os.path.isfile("MEDIA_ROOT/Catalog/Product/Dao_Giau_Vang.jpg"))
-# print("1", os.path.isfile(f"{MEDIA_ROOT}/Catalog/Product/Dao_Giau_Vang.jpg"))
-# print("2", f"{MEDIA_ROOT}/Catalog/Product/Dao_Giau_Vang.jpg")
 # login url
 LOGIN_URL = '/User/login'

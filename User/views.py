@@ -16,7 +16,8 @@ from Catalog.models import Category
 
 def homepage(request):
     list_user = User.objects.all()
-    return render(request, "User/homepage.html", {"list_user": list_user})
+    return render(request, "User/homepage.html",
+                  {"list_user": list_user, 'permission': 'Catalog.view_category'})
 
 
 def register_request(request):
@@ -63,6 +64,7 @@ def permission_request(request, user_id):
         notification = "sucessfully"
     else:
         notification = "fail"
-    return render(request, "User/permission.html", {"notification": notification, 'my_user': user})
+    return render(request, "User/permission.html",
+                  {"notification": notification, 'my_user': user})
 
 

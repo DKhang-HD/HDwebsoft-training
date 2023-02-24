@@ -5,15 +5,23 @@ from django.db import models
 
 class Category(models.Model):
     type = models.CharField(max_length=200)
-    picture = models.ImageField(blank=True, upload_to='Catalog/Category')
+    picture = models.ImageField(blank=True, upload_to='Catalog/Category/images')
 
     def __str__(self):
         return self.type
 
+    @property
+    def image_url(self):
+        try:
+            url = self.picture.url
+        except:
+            url = ''
+        return url
+
 
 class Product(models.Model):
     type = models.ForeignKey(Category, on_delete=models.CASCADE)
-    picture = models.ImageField(blank=True, upload_to='Catalog/Product')
+    picture = models.ImageField(blank=True, upload_to='Catalog/Product/images')
     name = models.CharField(max_length=200)
     pub_date = models.DateTimeField('date published')
     author = models.CharField(max_length=30, null=True)
@@ -21,6 +29,14 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+    @property
+    def image_url(self):
+        try:
+            url = self.picture.url
+        except:
+            url = ''
+        return url
 
 
 class Work(models.Model):
