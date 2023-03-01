@@ -1,0 +1,11 @@
+<html>
+<h1> This list of order page </h1>
+    <h2>How many <strong>{{order.product}}</strong> do you want to buy from the <strong>{{order.category}}</strong> shelf</h2>
+
+    <form method = 'POST'>
+        {% csrf_token %}
+        <p>{{order.quantity}}</p>
+        <button type="submit" >Submit</button>
+    </form>
+        <p>Go <a href="{% url 'Catalog:catalog_page' %}">back</a></p>
+</html>

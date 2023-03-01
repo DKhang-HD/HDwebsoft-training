@@ -10,8 +10,10 @@
 			<p> This is list of user, you can specify permission for them </p>
 			<ul>
 				{% for user_ in list_user %}
-                    {% if not user_.id is user.id %}
-                        <li> <a href="{% url 'User:permission' user_.id %}">{{user_.username}}</a> </li>
+                    {% if not user_.id is user.id%}
+<!--                        {% if not user_.Catalog.view_category %}-->
+                            <li> <a href="{% url 'User:permission' user_.id %}">{{user_.username}}</a> </li>
+<!--                        {% endif %}-->
                     {% endif %}
 				{% endfor %}
 			</ul>

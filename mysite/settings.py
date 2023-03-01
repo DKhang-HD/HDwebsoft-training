@@ -152,3 +152,6 @@ MEDIA_URL = '/media/'       # http to access
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')        # where file is saved
 # login url
 LOGIN_URL = '/User/login'
+
+# Change the default user
+# AUTH_USER_MODEL = "User.myuser"

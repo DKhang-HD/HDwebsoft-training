@@ -1,5 +1,5 @@
 from django import forms
-from .models import Category, Product, Work
+from .models import Category, Product, Order
 
 
 class CategoryCreate(forms.ModelForm):
@@ -14,7 +14,7 @@ class ProductCreate(forms.ModelForm):
         fields = '__all__'
 
 
-class WorkCreate(forms.ModelForm):
+class OrderCreate(forms.ModelForm):
     class Meta:
-        model = Work
+        model = Order
         fields = '__all__'

@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect, HttpResponseRedirect
-from django.urls import reverse_lazy
-from .models import Category, Product, Work
-from .forms import CategoryCreate, ProductCreate, WorkCreate
+from django.urls import reverse_lazy, reverse
+from .models import Category, Product, Order
+from .forms import CategoryCreate, ProductCreate, OrderCreate
 from django.http import HttpResponse
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required, permission_required
@@ -101,11 +101,16 @@ def delete_book(request, product_id):
     return HttpResponseRedirect(reverse_lazy('Catalog:catalog_page'))
 
 
-def work_page(request, category_id):
-    category = get_object_or_404(Work, pk=int(category_id))
-    product_list = category.product_set.all()
-    p = Paginator(product_list, 2)
-    page = request.GET.get('page')
-    product_per_page = p.get_page(page)
-    return render(request, 'Catalog/shelf.html',
-                  {'category': category, 'product_per_page': product_per_page})
+# def order_book(request, category_id, product_id):
+#     # return HttpResponseRedirect(reverse_lazy('Catalog:catalog_page'))
+#     category_type = Category.objects.get(pk=category_id)
+#     product_name = Product.objects.get(pk=product_id)
+#     order = Order(category=category_type, product=product_name, quantity=0)
+#
+#     if request.method == 'POST':
+#         order_form = CategoryCreate(category=category_type, product=product_name, quantity=request.POST['quantity'])
+#         if order_form.is_valid():
+#             order_form.save()
+#             return HttpResponseRedirect(reverse_lazy('Catalog:catalog_page'))
+#     return render(request, 'Catalog/order.html', {'order': order})
+

@@ -20,9 +20,9 @@ class Category(models.Model):
 
 
 class Product(models.Model):
-    type = models.ForeignKey(Category, on_delete=models.CASCADE)
-    picture = models.ImageField(blank=True, upload_to='Catalog/Product/images')
+    type = models.ManyToManyField(Category)
     name = models.CharField(max_length=200)
+    picture = models.ImageField(blank=True, upload_to='Catalog/Product/images')
     pub_date = models.DateTimeField('date published')
     author = models.CharField(max_length=30, null=True)
     price = models.IntegerField(null=True)
@@ -39,7 +39,7 @@ class Product(models.Model):
         return url
 
 
-class Work(models.Model):
+class Order(models.Model):
     category = models.ForeignKey(Category, null=True, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, null=True, on_delete=models.CASCADE)
-    sales = models.IntegerField(null=True)
+    quantity = models.IntegerField(null=True)
