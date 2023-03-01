@@ -18,4 +18,4 @@ class Student(models.Model):
 class StudentModel(models.Model):
     name = models.CharField(max_length=100)
     grade = models.CharField(max_length=200)
-    file_student = models.FileField(upload_to='uploadfile/StudentModel/documents')
+    file_student = models.FileField(upload_to='documents/')

@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect, HttpResponseRedirect
 from django.urls import reverse_lazy
-from .models import Category, Product, Work
+from .models import Category, Product
 from .forms import CategoryCreate, ProductCreate, WorkCreate
 from django.http import HttpResponse
 from django.core.paginator import Paginator
@@ -8,8 +8,8 @@ from django.contrib.auth.decorators import login_required, permission_required
 # Create your views here.
 
 
-@login_required(redirect_field_name=None)
-@permission_required('Catalog.view_category')
+# @login_required(redirect_field_name=None)
+# @permission_required('Catalog.view_category')
 def catalog_page(request):
     category_list = Category.objects.all()
     p = Paginator(category_list, 2)
@@ -38,7 +38,7 @@ def update_category(request, category_id):
         book = Category.objects.get(pk=category_id)
     except Category.DoesNotExist:
         return HttpResponseRedirect(reverse_lazy('Catalog:catalog_page'))
-    category_form = CategoryCreate(request.POST, request.FILES, instance=book)
+    category_form = CategoryCreate(request.POST or None, instance=book)
     if category_form.is_valid():
         category_form.save()
         return HttpResponseRedirect(reverse_lazy('Catalog:catalog_page'))
@@ -84,7 +84,7 @@ def update_book(request, product_id):
         book = Product.objects.get(pk=product_id)
     except Product.DoesNotExist:
         return HttpResponseRedirect(reverse_lazy('Catalog:catalog_page'))
-    product_form = ProductCreate(request.POST, request.FILES, instance=book)
+    product_form = ProductCreate(request.POST or None, instance=book)
     if product_form.is_valid():
         product_form.save()
         return HttpResponseRedirect(reverse_lazy('Catalog:catalog_page'))
@@ -100,12 +100,3 @@ def delete_book(request, product_id):
     book.delete()
     return HttpResponseRedirect(reverse_lazy('Catalog:catalog_page'))
 
-
-def work_page(request, category_id):
-    category = get_object_or_404(Work, pk=int(category_id))
-    product_list = category.product_set.all()
-    p = Paginator(product_list, 2)
-    page = request.GET.get('page')
-    product_per_page = p.get_page(page)
-    return render(request, 'Catalog/shelf.html',
-                  {'category': category, 'product_per_page': product_per_page})

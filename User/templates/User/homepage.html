@@ -1,18 +1,13 @@
-{% load static %}
-<img src="{% static 'User/images/Logo.png' %}" width = "300" height="200">
 <h1>Homepage</h1>
 <body>
     <h2> Welcome to the homepage</h2>
-    <!--user who is loging-->
     {% if user.is_authenticated %}
         <p>Welcome, {{user.username}}</p>
         {% if perms.User.add_User %}
 			<p> This is list of user, you can specify permission for them </p>
 			<ul>
-				{% for user_ in list_user %}
-                    {% if not user_.id is user.id %}
-                        <li> <a href="{% url 'User:permission' user_.id %}">{{user_.username}}</a> </li>
-                    {% endif %}
+				{% for user in list_user %}
+					<li> <a href="{% url 'User:permission' user.id %}">{{user.username}}</a> </li>
 				{% endfor %}
 			</ul>
 		{% endif %}
