@@ -1,4 +1,6 @@
 <html>
+{% load static %}
+<img src="{% static 'Catalog/images/Logo.jpg' %}" width="300" height="200" >
 <h1> This is list of Category </h1>
     <h2><a href="{% url 'Catalog:upload_category' %}">Upload Category</a></h2>
         {% if category_list %}
@@ -7,7 +9,7 @@
                 {%for category in category_per_page %}
                     <li>
                         <p>Type of book: <a href ="{% url 'Catalog:product_page' category.id %}"> {{category.type}} </a> </p>
-                        <img src="{{category.picture.url }}"  width="400" height="500">
+                        <img src="{{category.image_url }}"  width="400" height="500">
                         <p>
                             <a href="{% url 'Catalog:update_category' category.id%}">edit</a>
                             <a href="{% url 'Catalog:delete_category' category.id%}">delete</a>
@@ -33,4 +35,3 @@
         {% endif %}
 
 </html>
-

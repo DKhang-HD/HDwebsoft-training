@@ -1,0 +1,13 @@
+<h1>Login</h1>
+	{% if user.is_authenticated %}
+		<h2> You sign in successfully</h2>
+		<p>Welcome to {{user.username}}</p>
+		<p>You can go to <a href="{% url 'Catalog:catalog_page' %}">Catalog page</a></p>
+		<p>Or you can go back <a href="{% url 'User:homepage' %}">homepage</a></p>
+	{% else %}
+		<form method="POST" action="{% url 'login' %}">
+			{% csrf_token %}
+			{{form.as_p}}
+			<button type="submit">Login</button>
+		</form>
+	{% endif %}

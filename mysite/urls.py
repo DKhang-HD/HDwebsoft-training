@@ -22,12 +22,15 @@ urlpatterns = [
     path('uploadimage/', include('uploadimage.urls')),
     path('uploadfile/', include('uploadfile.urls')),
     path('sendmail/', include('sendmail.urls')),
-    path('User/', include('User.urls')),
     path('Catalog/', include('Catalog.urls')),
     path('blog/', include('blog.urls')),
+    path('User/', include('User.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),
     path('admin/', admin.site.urls),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
 
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 #DataFlair
 # if settings.DEBUG:
 #     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
