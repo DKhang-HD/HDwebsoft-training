@@ -4,6 +4,19 @@ from django.contrib import admin
 # Register your models here.
 
 
+class MyProductInline(admin.TabularInline):
+    model = ProductInstance
+    extra = 0
+    readonly_fields = ('id', )
+    can_delete = False
+
+
+class MyProductInstanceAdmin(admin.ModelAdmin):
+    model = ProductInstance
+    list_display = ["product", "status", "due_back"]
+    list_filter = ("status", "due_back")
+
+
 class MyProductAdmin(admin.ModelAdmin):
     model = Product
     list_display = ["name", "author", "price", "pub_date"]
@@ -13,15 +26,9 @@ class MyProductAdmin(admin.ModelAdmin):
         ('Detail', {'fields': ("picture", "price", ("author", "pub_date"))}),
     )
 
-
-class MyProductInstanceAdmin(admin.ModelAdmin):
-    model = ProductInstance
-    list_display = ["product", "status", "due_back"]
-    list_filter = ("status", "due_back")
+    inlines = [MyProductInline]
 
 
-# class MyProductInline(admin.TabularInline):
-#     model = Product
 
 
 # Must have Forein key

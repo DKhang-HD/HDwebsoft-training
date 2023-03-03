@@ -52,7 +52,7 @@ class ProductInstance(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4,
                           help_text='Unique ID for this particular book across whole library')
     # RESTRICT: ensure Product can't be delete
-    product = models.ForeignKey('Product', on_delete=models.RESTRICT, null=True)
+    product = models.ForeignKey(Product, on_delete=models.RESTRICT, null=True)
     borrower = models.ForeignKey(MyUser, on_delete=models.SET_NULL, null=True, blank=True)
     due_back = models.DateField(null=True, blank=True)
 

@@ -1,5 +1,5 @@
 # from django.http import HttpResponse, HttpResponseRedirect
-# from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth import login, logout, authenticate
 # from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.models import Permission
@@ -9,6 +9,7 @@ from django.views.generic.edit import CreateView
 from .forms import MyUserCreationForm
 from .models import MyUser
 from Catalog.models import Category
+from .signal import signup_done
 # Create your views here.
 
 
@@ -17,9 +18,14 @@ class SignUpView(CreateView):
     success_url = reverse_lazy('login')     # account/login
     template_name = 'User/signup.html'
 
+    def __del__(self):
+        if authenticate(self.request, username=self.request.POST['username'], password=self.request.POST['password1']):
+            signup_done.send(sender=self.__class__)
+
 
 def homepage(request):
     list_user = MyUser.objects.all()
+
     return render(request, "User/homepage.html",
                   {"list_user": list_user, 'permission': 'Catalog.view_category'})
 
