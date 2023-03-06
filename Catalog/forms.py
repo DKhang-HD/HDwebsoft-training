@@ -1,5 +1,5 @@
 from django import forms
-from .models import Category, Product
+from .models import Category, Book, BookInstance, Author
 from django.forms.utils import ErrorList
 from django.utils.safestring import mark_safe
 
@@ -27,10 +27,23 @@ class CategoryCreate(MyBaseModelForm):
         fields = '__all__'
 
 
-class ProductCreate(MyBaseModelForm):
+class BookCreate(MyBaseModelForm):
     class Meta:
-        model = Product
+        model = Book
         fields = '__all__'
+
+
+class BookInstanceCreate(MyBaseModelForm):
+    class Meta:
+        model = BookInstance
+        fields = '__all__'
+
+
+class AuthorCreate(MyBaseModelForm):
+    class Meta:
+        model = Author
+        fields = '__all__'
+
 
 # class DivErrorList(ErrorList):
 #     def __unicode__(self):

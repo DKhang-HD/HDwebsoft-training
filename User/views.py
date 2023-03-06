@@ -9,7 +9,7 @@ from django.views.generic.edit import CreateView
 from .forms import MyUserCreationForm
 from .models import MyUser
 from Catalog.models import Category
-from .signal import signup_done
+from .signal import signup_done, myname
 # Create your views here.
 
 
@@ -19,8 +19,13 @@ class SignUpView(CreateView):
     template_name = 'User/signup.html'
 
     def __del__(self):
-        if authenticate(self.request, username=self.request.POST['username'], password=self.request.POST['password1']):
-            signup_done.send(sender=self.__class__)
+        try:
+            user = authenticate(self.request, username=self.request.POST['username'], password=self.request.POST['password1'])
+        except:
+            user = None
+        if user is not None:
+            signup_done.send_robust(sender=self.__class__)
+            myname.send_robust(sender=MyUser, instance=user)
 
 
 def homepage(request):

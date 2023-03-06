@@ -1,43 +1,43 @@
 from django.contrib import admin
-from .models import Category, Product, ProductInstance
+from .models import Category, Book, BookInstance, Author
 from django.contrib import admin
 # Register your models here.
 
 
-class MyProductInline(admin.TabularInline):
-    model = ProductInstance
+class MyBookInline(admin.TabularInline):
+    model = BookInstance
     extra = 0
-    readonly_fields = ('id', )
+    # readonly_fields = ('id', )
     can_delete = False
 
 
-class MyProductInstanceAdmin(admin.ModelAdmin):
-    model = ProductInstance
-    list_display = ["product", "status", "due_back"]
+class MyBookInstanceAdmin(admin.ModelAdmin):
+    model = BookInstance
+    list_display = ["book", "status", "borrower", "due_back"]
     list_filter = ("status", "due_back")
 
 
-class MyProductAdmin(admin.ModelAdmin):
-    model = Product
-    list_display = ["name", "author", "price", "pub_date"]
-    list_filter = ("name", "price")
+class MyBookAdmin(admin.ModelAdmin):
+    model = Book
+    list_display = ["title", "author"]
+    list_filter = ("title", "category")
     fieldsets = (
-        ('Information', {'fields': ("type", "name")}),
-        ('Detail', {'fields': ("picture", "price", ("author", "pub_date"))}),
+        ('Information', {'fields': ("title", "category")}),
+        ('Detail', {'fields': ("picture", "author", "summary")}),
     )
 
-    inlines = [MyProductInline]
+    inlines = [MyBookInline]
 
 
+admin.site.register(Category)
+admin.site.register(Author)
+admin.site.register(Book, MyBookAdmin)
+admin.site.register(BookInstance, MyBookInstanceAdmin)
 
 
-# Must have Forein key
+# Must have Foreign key
 # class MyCategoryAdmin(admin.ModelAdmin):
 #     model = Category
 #     inlines = [MyProductInline]
 
 
-admin.site.register(Category)
-admin.site.register(Product, MyProductAdmin)
-admin.site.register(ProductInstance, MyProductInstanceAdmin)
-# admin.site.register(Category, MyCategoryAdmin)

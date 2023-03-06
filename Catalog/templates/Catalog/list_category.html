@@ -8,11 +8,11 @@
             <ul>
                 {%for category in list_category %}
                     <li>
-                        <p>Type of book: <a href ="{% url 'Catalog:product_page' category.id %}"> {{category.type}} </a> </p>
+                        <p>Name of category: <a href ="{% url 'Catalog:book_page' category.id %}"> {{category.name}} </a> </p>
                         <img src="{{category.image_url }}"  width="400" height="500">
                         <p>
-                            <a href="{% url 'Catalog:update_category' category.id%}">edit</a>
-                            <a href="{% url 'Catalog:delete_category' category.id%}">delete</a>
+                            <a href="{% url 'Catalog:update_category' category.id %}">edit</a>
+                            <a href="{% url 'Catalog:delete_category' category.id %}">delete</a>
                         </p>
                     </li>
                 {% endfor %}
@@ -22,6 +22,7 @@
         <p> No type of category are available </p>
         {% endif %}
     <p><a href="{% url 'logout' %}">Logout</a></p>
+    <p><a href="{% url 'Catalog:homepage' %}">Back to the homepage</a></p>
 <hr><br/><br/>
      {% if is_paginated %}
         {% if page_obj.has_previous %}

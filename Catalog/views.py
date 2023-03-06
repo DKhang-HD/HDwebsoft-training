@@ -2,12 +2,33 @@ from django.shortcuts import render, get_object_or_404, redirect, HttpResponseRe
 # from django.http import HttpResponse
 # from django.contrib.auth.decorators import login_required, permission_required
 from django.urls import reverse_lazy, reverse
-from .models import Category, Product
-from .forms import CategoryCreate, ProductCreate
+from .models import Category, Book, BookInstance, Author
+from .forms import CategoryCreate, BookCreate, BookInstanceCreate, AuthorCreate
 from django.core.paginator import Paginator
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 # error_class=ErrorListMsg
+
+
+def homepage(request):
+    """View function for home page of site."""
+
+    num_books = Book.objects.all().count()
+    num_instances = BookInstance.objects.all().count()
+
+    num_instances_available = BookInstance.objects.filter(status__exact='a').count()
+
+    num_authors = Author.objects.count()
+
+    context = {
+        'num_books': num_books,
+        'num_instances': num_instances,
+        'num_instances_available': num_instances_available,
+        'num_authors': num_authors,
+    }
+
+    # Render the HTML template index.html with the data in the context variable
+    return render(request, 'Catalog/index.html', context=context)
 
 
 class CategoryListView(LoginRequiredMixin, PermissionRequiredMixin, generic.ListView):
@@ -23,18 +44,18 @@ class CategoryListView(LoginRequiredMixin, PermissionRequiredMixin, generic.List
 class CategoryDetailView(LoginRequiredMixin, PermissionRequiredMixin, generic.DetailView):
     permission_required = ('Catalog.view_category', 'Catalog.view_product')
     model = Category
-    paginate_by = 2
+    paginate_by = 1
     context_object_name = 'detail_category'
     template_name = 'Catalog/detail_category.html'
 
     def get_context_data(self, **kwargs):
         context = super(CategoryDetailView, self).get_context_data(**kwargs)
         category = self.object
-        product_list = category.product_set.all()
-        p = Paginator(product_list, self.paginate_by)
+        book_list = category.book_set.all()
+        p = Paginator(book_list, self.paginate_by)
         page = self.request.GET.get('page')
-        product_per_page = p.get_page(page)
-        context['product_per_page'] = product_per_page
+        book_per_page = p.get_page(page)
+        context['book_per_page'] = book_per_page
         return context
 
 
@@ -42,7 +63,7 @@ class CategoryUploadView(generic.CreateView):
     model = Category
     form_class = CategoryCreate
     template_name = 'Catalog/upload_category.html'
-    success_url = reverse_lazy('Catalog:catalog_page')
+    success_url = reverse_lazy('Catalog:homepage')
 
 
 class CategoryUpdateView(generic.UpdateView):
@@ -58,11 +79,9 @@ class CategoryDeleteView(generic.DeleteView):
     success_url = reverse_lazy('Catalog:catalog_page')
 
 
-class ProductUploadView(generic.CreateView):
-    model = Product
-    form_class = ProductCreate
-    template_name = 'Catalog/upload_category.html'
-    success_url = reverse_lazy('Catalog:catalog_page')
+class BookUploadView(CategoryUploadView):
+    model = Book
+    form_class = BookCreate
 
     # def get_success_url(self):
     #     # category = get_object_or_404(Category, pk=self.request.POST['pk'])
@@ -70,22 +89,27 @@ class ProductUploadView(generic.CreateView):
     #     return reverse('Catalog:product_page', kwargs={'pk': self.request.POST['pk']})
 
 
-class ProductUpdateView(generic.UpdateView):
-    model = Product
-    form_class = ProductCreate
-    context_object_name = '_product'
-    template_name = 'Catalog/update_category.html'
-    success_url = reverse_lazy('Catalog:catalog_page')
+class BookUpdateView(CategoryUpdateView):
+    model = Book
+    form_class = BookCreate
 
 
-class ProductDeleteView(generic.DeleteView):
-    model = Product
-    template_name = 'Catalog/category_confirm_delete.html'
-    success_url = reverse_lazy('Catalog:catalog_page')
+class BookDeleteView(CategoryDeleteView):
+    model = Book
 
-    # def get_success_url(self):
-    #     return reverse('Catalog:product_page', kwargs={'pk': self.object.pk})
 
+class LoanedBooksByUserView(LoginRequiredMixin, generic.ListView):
+
+    model = BookInstance
+    template_name = 'catalog/bookinstance_list_borrowed_user.html'
+    paginate_by = 2
+
+    def get_queryset(self):
+        return (
+            BookInstance.objects.filter(borrower=self.request.user)
+            .filter(status__exact='o')
+            .order_by('due_back')
+        )
 
 # @login_required(redirect_field_name=None)
 # @permission_required('Catalog.view_category')
